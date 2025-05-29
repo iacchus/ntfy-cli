@@ -23,6 +23,7 @@ HEADERS = {
         "X-Title": MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
+        "X-Tags": "+1, richtig"
         }
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
