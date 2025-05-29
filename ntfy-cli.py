@@ -8,7 +8,12 @@ import requests
 
 from requests.auth import HTTPBasicAuth
 
+# https://github.com/iacchus/ntfy-cli
 # https://docs.ntfy.sh/publish/
+# https://requests.readthedocs.io/en/latest/user/authentication/
+# https://docs.python.org/3/library/argparse.html
+# https://click.palletsprojects.com/en/stable/
+# https://click.palletsprojects.com/en/stable/quickstart/
 
 NTFY_SERVER = os.environ.get('NTFY_SERVER')
 NTFY_TOPIC = os.environ.get('NTFY_TOPIC')
