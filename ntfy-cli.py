@@ -17,8 +17,10 @@ NTFY_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
 NTFY_TOKEN = os.environ.get('NTFY_TOKEN') or ""
 
 ICON_IMAGE_URL = "https://public.kassius.org/python-logo.png"
+MESSAGE_TITLE = "Sent via ntfy-cli.py"
 
 HEADERS = {
+        "X-Title": MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
         }
