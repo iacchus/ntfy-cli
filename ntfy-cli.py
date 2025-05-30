@@ -72,7 +72,8 @@ auth_header_query_param_value = \
         base64.b64encode(auth_header_basic.encode("ascii")).decode("utf-8")
 
 MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
-print(auth_string, auth_string_bytes, auth_string_base64)
+#  print(auth_string, auth_string_bytes, auth_string_base64)
+
 HEADERS = {
         "X-Title": DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
