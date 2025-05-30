@@ -24,35 +24,39 @@ NTFY_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
 NTFY_TOKEN = os.environ.get('NTFY_TOKEN') or ""
 
 ICON_IMAGE_URL = "https://public.kassius.org/python-logo.png"
-MESSAGE_TITLE = "Sent via ntfy-cli.py"
-MESSAGE_BODY = sys.stdin if NTFY_FROM_STDIN else 'testing\nnotification'
+
+DEFAULT_MESSAGE_TITLE = "Sent via ntfy-cli.py"
+DEFAULT_MESSAGE_BODY = sys.stdin if NTFY_FROM_STDIN else 'testing\nnotification'
 
 HEADERS = {
-        "X-Title": MESSAGE_TITLE,
+        "X-Title": DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
         "X-Tags": "+1, richtig"
         }
 
+PRIORITIES = {"urgent", "high", "default", "low", "min"}
 argument_parser = argparse.ArgumentParser(
         prog=os.path.basename(sys.argv[0]),
         description='Send ntfy notification',
         epilog="This is the epilog\ngh:iacchus/ntfy-cli"
         )
 
-argument_parser.add_argument("title")
-argument_parser.add_argument("message")
+#  argument_parser.add_argument("title")
+#  argument_parser.add_argument("message")
+argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
 argument_parser.add_argument("-k", "--markdown", action="store_true")
 args = argument_parser.parse_args()
-print(args, args.message)
+print(args)
 
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
 
-r = requests.post(url=NTFY_URL,
-                  auth=('', NTFY_TOKEN),
-                  data=MESSAGE_BODY,
-                  headers=HEADERS)
+#  r = requests.post(url=NTFY_URL,
+#                    auth=('', NTFY_TOKEN),
+#                    data=MESSAGE_BODY,
+#  #                    data=DEFAULT_MESSAGE_BODY,
+#                    headers=HEADERS)
 
-print(r.text)
+#  print(r.text)
