@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import pathlib
 import sys
 
 import click
@@ -11,11 +12,13 @@ from requests.auth import HTTPBasicAuth
 
 # https://github.com/iacchus/ntfy-cli
 # https://docs.ntfy.sh/publish/
+# https://docs.ntfy.sh/publish/#attachments
 # https://requests.readthedocs.io/en/latest/user/authentication/
 # https://docs.python.org/3/library/argparse.html
 # https://docs.python.org/3.13/howto/argparse.html
 # https://click.palletsprojects.com/en/stable/
 # https://click.palletsprojects.com/en/stable/quickstart/
+# https://stackoverflow.com/a/48593823/371160
 
 # let's prepend all environment variables with our namespace ("NTFY_", by now)
 #  NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
