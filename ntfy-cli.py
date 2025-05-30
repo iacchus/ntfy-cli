@@ -13,6 +13,10 @@ from requests.auth import HTTPBasicAuth
 # https://github.com/iacchus/ntfy-cli
 # https://docs.ntfy.sh/publish/
 # https://docs.ntfy.sh/publish/#attachments
+# https://docs.python.org/3.13/library/urllib.request.html#module-urllib.request
+# https://docs.python.org/3/howto/urllib2.html
+# https://www.geeksforgeeks.org/python-urllib-module/
+# https://realpython.com/urllib-request/#post-requests-with-urllibrequest
 # https://requests.readthedocs.io/en/latest/user/authentication/
 # https://docs.python.org/3/library/argparse.html
 # https://docs.python.org/3.13/howto/argparse.html
