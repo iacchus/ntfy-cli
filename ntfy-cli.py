@@ -47,7 +47,7 @@ PRIORITIES = {"urgent", "high", "default", "low", "min"}
 argument_parser = argparse.ArgumentParser(
         prog=os.path.basename(sys.argv[0]),
         description='Send ntfy notification',
-        epilog="This is the epilog\ngh:iacchus/ntfy-cli"
+        epilog="https://github.com/iacchus/ntfy-cli"
         )
 
 #  argument_parser.add_argument("title")
@@ -60,6 +60,7 @@ argument_parser.add_argument("-m", "--message",
                              default=os.environ.get('NTFY_MESSAGE_BODY') or
                              DEFAULT_MESSAGE_BODY)
 argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
+argument_parser.add_argument("-d", "--delay", default=None)
 #  argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-k", "--markdown", action="store_const", const="yes")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
@@ -86,6 +87,7 @@ HEADERS = {
         "X-Priority": "urgent",
         "X-Tags": "+1, richtig",
         "X-Markdown": args.markdown or "no",
+        "X-Delay": args.delay or None,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
         "Authorization": f"Basic {auth_string_base64}",
         }
