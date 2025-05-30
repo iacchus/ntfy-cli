@@ -52,12 +52,17 @@ argument_parser = argparse.ArgumentParser(
 
 #  argument_parser.add_argument("title")
 #  argument_parser.add_argument("message")
-argument_parser.add_argument("-t", "--title", default=DEFAULT_MESSAGE_TITLE)
+#  argument_parser.add_argument("-t", "--title", default=DEFAULT_MESSAGE_TITLE)
+argument_parser.add_argument("-t", "--title",
+                             default=os.environ.get('NTFY_MESSAGE_TITLE') or
+                             DEFAULT_MESSAGE_TITLE)
+argument_parser.add_argument("-m", "--message",
+                             default=os.environ.get('NTFY_MESSAGE_BODY') or
+                             DEFAULT_MESSAGE_BODY)
 argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
 argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
 argument_parser.add_argument("-a", "--attach", help="Attach a file from an URL")
-argument_parser.add_argument("message")
 args = argument_parser.parse_args()
 print(args)
 
@@ -75,7 +80,7 @@ MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
 #  print(auth_string, auth_string_bytes, auth_string_base64)
 
 HEADERS = {
-        "X-Title": DEFAULT_MESSAGE_TITLE,
+        "X-Title": args.title or DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
         "X-Tags": "+1, richtig",
