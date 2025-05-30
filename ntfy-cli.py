@@ -4,6 +4,12 @@ import argparse
 import os
 import pathlib
 import sys
+import urllib
+
+from urllib.error import HTTPError
+from urllib.error import URLError
+from urllib.request import Request
+from urllib.request import urlopen
 
 import click
 import requests
