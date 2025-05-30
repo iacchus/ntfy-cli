@@ -89,7 +89,7 @@ HEADERS = {
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
         #  "X-Tags": "+1, richtig",
-        "X-Tags": ", ".join(args.tags),
+        "X-Tags": ", ".join(args.tags if args.tags else []),
         "X-Markdown": args.markdown or "no",
         "X-Delay": args.delay or None,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
