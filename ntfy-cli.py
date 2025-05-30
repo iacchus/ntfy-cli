@@ -24,6 +24,7 @@ from requests.auth import HTTPBasicAuth
 # https://click.palletsprojects.com/en/stable/
 # https://click.palletsprojects.com/en/stable/quickstart/
 # https://stackoverflow.com/a/48593823/371160
+# https://docs.python.org/3/library/mimetypes.html
 
 # for posting binary files with PUT:
 # https://stackoverflow.com/a/8706029/371160
