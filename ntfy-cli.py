@@ -5,17 +5,10 @@ import base64
 import os
 import pathlib
 import sys
-import urllib
-
-from urllib.error import HTTPError
-from urllib.error import URLError
-from urllib.parse import urlencode
-from urllib.request import Request
-from urllib.request import urlopen
 
 import click
-import requests
 
+import requests
 from requests.auth import HTTPBasicAuth
 
 # https://github.com/iacchus/ntfy-cli
@@ -64,6 +57,7 @@ argument_parser.add_argument("-p", "--priority", default="default", choices=PRIO
 argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
 argument_parser.add_argument("-a", "--attach", help="Attach a file from an URL")
+argument_parser.add_argument("message")
 args = argument_parser.parse_args()
 print(args)
 
@@ -77,6 +71,7 @@ auth_header_query_param_key = "auth"
 auth_header_query_param_value = \
         base64.b64encode(auth_header_basic.encode("ascii")).decode("utf-8")
 
+MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
 print(auth_string, auth_string_bytes, auth_string_base64)
 HEADERS = {
         "X-Title": DEFAULT_MESSAGE_TITLE,
@@ -92,11 +87,11 @@ print(HEADERS)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
 
-make_post_request(url=NTFY_URL, unencoded_data={"X-Message": "okayy"}, headers=HEADERS)
-#  r = requests.post(url=NTFY_URL,
+#  make_post_request(url=NTFY_URL, unencoded_data={"X-Message": "okayy"}, headers=HEADERS)
+r = requests.post(url=NTFY_URL,
 #                    auth=('', NTFY_TOKEN),
-#                    data=MESSAGE_BODY,
-#  #                    data=DEFAULT_MESSAGE_BODY,
-#                    headers=HEADERS)
+                  data=MESSAGE_BODY,
+#                    data=DEFAULT_MESSAGE_BODY,
+                  headers=HEADERS)
 
 #  print(r.text)
