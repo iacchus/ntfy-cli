@@ -64,6 +64,7 @@ argument_parser.add_argument("-p", "--priority", default="default",
 argument_parser.add_argument("-x", "--tags", "--tag", action="extend", nargs="+",
                              type=str)
 argument_parser.add_argument("-d", "--delay", default=None)
+argument_parser.add_argument("-c", "--click", default=None)
 #  argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-k", "--markdown", action="store_const", const="yes")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
@@ -92,6 +93,7 @@ HEADERS = {
         "X-Tags": ", ".join(args.tags if args.tags else []),
         "X-Markdown": args.markdown or "no",
         "X-Delay": args.delay or None,
+        "X-Click": args.click or None,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
         "Authorization": f"Basic {auth_string_base64}",
         }
