@@ -35,20 +35,6 @@ from requests.auth import HTTPBasicAuth
 # for posting binary files with PUT:
 # https://stackoverflow.com/a/8706029/371160
 
-def make_post_request(url, unencoded_data={}, headers={}, method='POST'):
-    data = urlencode(unencoded_data).encode("utf-8")
-    request = Request(url=url, headers=headers, data=data, method=method)
-    try:
-        with urlopen(url=request, timeout=60) as response:
-            print(response.status)
-            return response.read(), response
-    except HTTPError as error:
-        print(error)
-    except URLError as error:
-        print(error)
-    except TimeoutError as error:
-        print(error)
-
 # let's prepend all environment variables with our namespace ("NTFY_", by now)
 #  NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
 NTFY_SERVER = os.environ.get('NTFY_SERVER')
