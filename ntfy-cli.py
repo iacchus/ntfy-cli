@@ -32,6 +32,9 @@ from requests.auth import HTTPBasicAuth
 # https://click.palletsprojects.com/en/stable/quickstart/
 # https://stackoverflow.com/a/48593823/371160
 
+# for posting binary files with PUT:
+# https://stackoverflow.com/a/8706029/371160
+
 def make_post_request(url, unencoded_data={}, headers={}, method='POST'):
     data = urlencode(unencoded_data).encode("utf-8")
     request = Request(url=url, headers=headers, data=data, method=method)
