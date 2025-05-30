@@ -79,8 +79,14 @@ args = argument_parser.parse_args()
 print(args)
 
 auth_string = f":{NTFY_TOKEN}"
-auth_string_bytes = auth_string.encode('ascii')
-auth_string_base64 = base64.b64encode(auth_string_bytes).decode('utf-8')
+auth_string_bytes = auth_string.encode("ascii")
+auth_string_base64 = base64.b64encode(auth_string_bytes).decode("utf-8")
+auth_header_basic = f"Basic {auth_string_base64}"
+auth_header_bearer = f"Bearer {NTFY_TOKEN}"
+# https://docs.ntfy.sh/publish/#query-param
+auth_header_query_param_key = "auth"
+auth_header_query_param_value = \
+        base64.b64encode(auth_header_basic.encode("ascii")).decode("utf-8")
 
 print(auth_string, auth_string_bytes, auth_string_base64)
 HEADERS = {
