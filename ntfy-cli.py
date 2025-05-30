@@ -13,10 +13,12 @@ from requests.auth import HTTPBasicAuth
 # https://docs.ntfy.sh/publish/
 # https://requests.readthedocs.io/en/latest/user/authentication/
 # https://docs.python.org/3/library/argparse.html
+# https://docs.python.org/3.13/howto/argparse.html
 # https://click.palletsprojects.com/en/stable/
 # https://click.palletsprojects.com/en/stable/quickstart/
 
-NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
+# let's prepend all environment variables with our namespace ("NTFY_", by now)
+#  NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
 NTFY_SERVER = os.environ.get('NTFY_SERVER')
 NTFY_TOPIC = os.environ.get('NTFY_TOPIC')
 #  NTFY_DEFAULT_TOPIC_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
@@ -26,16 +28,11 @@ NTFY_TOKEN = os.environ.get('NTFY_TOKEN') or ""
 ICON_IMAGE_URL = "https://public.kassius.org/python-logo.png"
 
 DEFAULT_MESSAGE_TITLE = "Sent via ntfy-cli.py"
-DEFAULT_MESSAGE_BODY = sys.stdin if NTFY_FROM_STDIN else 'testing\nnotification'
-
-HEADERS = {
-        "X-Title": DEFAULT_MESSAGE_TITLE,
-        "X-Icon": ICON_IMAGE_URL,
-        "X-Priority": "urgent",
-        "X-Tags": "+1, richtig"
-        }
+DEFAULT_MESSAGE_BODY = 'testing\nnotification'
+#  DEFAULT_MESSAGE_BODY = sys.stdin if NTFY_FROM_STDIN else 'testing\nnotification'
 
 PRIORITIES = {"urgent", "high", "default", "low", "min"}
+
 argument_parser = argparse.ArgumentParser(
         prog=os.path.basename(sys.argv[0]),
         description='Send ntfy notification',
@@ -44,10 +41,18 @@ argument_parser = argparse.ArgumentParser(
 
 #  argument_parser.add_argument("title")
 #  argument_parser.add_argument("message")
+argument_parser.add_argument("-t", "--title", default=DEFAULT_MESSAGE_TITLE)
 argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
 argument_parser.add_argument("-k", "--markdown", action="store_true")
 args = argument_parser.parse_args()
 print(args)
+
+HEADERS = {
+        "X-Title": DEFAULT_MESSAGE_TITLE,
+        "X-Icon": ICON_IMAGE_URL,
+        "X-Priority": "urgent",
+        "X-Tags": "+1, richtig"
+        }
 
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
