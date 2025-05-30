@@ -59,7 +59,10 @@ argument_parser.add_argument("-t", "--title",
 argument_parser.add_argument("-m", "--message",
                              default=os.environ.get('NTFY_MESSAGE_BODY') or
                              DEFAULT_MESSAGE_BODY)
-argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
+argument_parser.add_argument("-p", "--priority", default="default",
+                             choices=PRIORITIES)
+argument_parser.add_argument("-x", "--tags", "--tag", action="extend", nargs="+",
+                             type=str)
 argument_parser.add_argument("-d", "--delay", default=None)
 #  argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-k", "--markdown", action="store_const", const="yes")
@@ -85,7 +88,8 @@ HEADERS = {
         "X-Title": args.title or DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
-        "X-Tags": "+1, richtig",
+        #  "X-Tags": "+1, richtig",
+        "X-Tags": ", ".join(args.tags),
         "X-Markdown": args.markdown or "no",
         "X-Delay": args.delay or None,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
