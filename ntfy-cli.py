@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import base64
 import os
 import pathlib
 import sys
@@ -8,6 +9,7 @@ import urllib
 
 from urllib.error import HTTPError
 from urllib.error import URLError
+from urllib.parse import urlencode
 from urllib.request import Request
 from urllib.request import urlopen
 
@@ -29,6 +31,20 @@ from requests.auth import HTTPBasicAuth
 # https://click.palletsprojects.com/en/stable/
 # https://click.palletsprojects.com/en/stable/quickstart/
 # https://stackoverflow.com/a/48593823/371160
+
+def make_post_request(url, unencoded_data={}, headers={}, method='POST'):
+    data = urlencode(unencoded_data).encode("utf-8")
+    request = Request(url=url, headers=headers, data=data, method=method)
+    try:
+        with urlopen(url=request, timeout=60) as response:
+            print(response.status)
+            return response.read(), response
+    except HTTPError as error:
+        print(error)
+    except URLError as error:
+        print(error)
+    except TimeoutError as error:
+        print(error)
 
 # let's prepend all environment variables with our namespace ("NTFY_", by now)
 #  NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
@@ -62,17 +78,25 @@ argument_parser.add_argument("-a", "--attach", help="Attach a file from an URL")
 args = argument_parser.parse_args()
 print(args)
 
+auth_string = f":{NTFY_TOKEN}"
+auth_string_bytes = auth_string.encode('ascii')
+auth_string_base64 = base64.b64encode(auth_string_bytes)
+
+print(auth_string, auth_string_bytes, auth_string_base64)
 HEADERS = {
         "X-Title": DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
-        "X-Tags": "+1, richtig"
+        "X-Tags": "+1, richtig",
+        "Authorization": f"Bearer {NTFY_TOKEN}",
+        #  "Authorization": f"Basic {auth_string_base64}",
         }
 
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
 
+make_post_request(url=NTFY_URL, unencoded_data={"X-Message": "okayy"}, headers=HEADERS)
 #  r = requests.post(url=NTFY_URL,
 #                    auth=('', NTFY_TOKEN),
 #                    data=MESSAGE_BODY,
