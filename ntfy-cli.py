@@ -68,7 +68,8 @@ argument_parser.add_argument("-c", "--click", default=None)
 #  argument_parser.add_argument("-k", "--markdown", action="store_true")
 argument_parser.add_argument("-k", "--markdown", action="store_const", const="yes")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
-argument_parser.add_argument("-a", "--attach", help="Attach a file from an URL")
+argument_parser.add_argument("-a", "--attach",
+                             help="Attach a file from an URL", default=None)
 args = argument_parser.parse_args()
 print(args)
 
@@ -94,6 +95,7 @@ HEADERS = {
         "X-Markdown": args.markdown or "no",
         "X-Delay": args.delay or None,
         "X-Click": args.click or None,
+        "X-Attach": args.attach,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
         "Authorization": f"Basic {auth_string_base64}",
         }
