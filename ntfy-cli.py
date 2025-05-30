@@ -80,7 +80,7 @@ print(args)
 
 auth_string = f":{NTFY_TOKEN}"
 auth_string_bytes = auth_string.encode('ascii')
-auth_string_base64 = base64.b64encode(auth_string_bytes)
+auth_string_base64 = base64.b64encode(auth_string_bytes).decode('utf-8')
 
 print(auth_string, auth_string_bytes, auth_string_base64)
 HEADERS = {
@@ -88,10 +88,11 @@ HEADERS = {
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
         "X-Tags": "+1, richtig",
-        "Authorization": f"Bearer {NTFY_TOKEN}",
-        #  "Authorization": f"Basic {auth_string_base64}",
+        #  "Authorization": f"Bearer {NTFY_TOKEN}",
+        "Authorization": f"Basic {auth_string_base64}",
         }
 
+print(HEADERS)
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
