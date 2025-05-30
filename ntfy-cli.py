@@ -47,6 +47,8 @@ argument_parser = argparse.ArgumentParser(
 argument_parser.add_argument("-t", "--title", default=DEFAULT_MESSAGE_TITLE)
 argument_parser.add_argument("-p", "--priority", default="default", choices=PRIORITIES)
 argument_parser.add_argument("-k", "--markdown", action="store_true")
+argument_parser.add_argument("-f", "--file", help="Attach a local file")
+argument_parser.add_argument("-a", "--attach", help="Attach a file from an URL")
 args = argument_parser.parse_args()
 print(args)
 
