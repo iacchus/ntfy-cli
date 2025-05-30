@@ -42,7 +42,7 @@ argument_parser = argparse.ArgumentParser(
 
 argument_parser.add_argument("title")
 argument_parser.add_argument("message")
-argument_parser.add_argument("--markdown", action="store_true")
+argument_parser.add_argument("-k", "--markdown", action="store_true")
 args = argument_parser.parse_args()
 print(args, args.message)
 
