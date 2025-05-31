@@ -31,7 +31,7 @@ import requests
 NTFY_SERVER = os.environ.get('NTFY_SERVER')
 NTFY_TOPIC = os.environ.get('NTFY_TOPIC')
 NTFY_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
-NTFY_TOKEN = os.environ.get('NTFY_TOKEN') or ""
+NTFY_TOKEN = os.environ.get('NTFY_TOKEN', default="")
 
 ICON_IMAGE_URL = "https://public.kassius.org/python-logo.png"
 
@@ -61,8 +61,8 @@ argument_parser.add_argument("-x", "--tags", "--tag", action="extend", nargs="+"
                              type=str)
 argument_parser.add_argument("-d", "--delay", default=None)
 argument_parser.add_argument("-c", "--click", default=None)
-#  argument_parser.add_argument("-k", "--markdown", action="store_true")
-argument_parser.add_argument("-k", "--markdown", action="store_const", const="yes")
+argument_parser.add_argument("-k", "--markdown", action="store_const",
+                             const="yes")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
 argument_parser.add_argument("-a", "--attach",
                              help="Attach a file from an URL", default=None)
@@ -103,7 +103,8 @@ if args.file:
 
         HEADERS.update({
             "X-Title": "File received (via ntfy)",
-            "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=args.filename or file_path.name),
+            "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=args.filename
+                                                      or file_path.name),
             "X-tags": "gift",
             "X-Filename": args.filename or file_path.name
             })
