@@ -68,6 +68,7 @@ argument_parser.add_argument("-k", "--markdown", action="store_const", const="ye
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
 argument_parser.add_argument("-a", "--attach",
                              help="Attach a file from an URL", default=None)
+argument_parser.add_argument("-n", "--filename", help="Send message as file with <filename>")
 args = argument_parser.parse_args()
 print(args)
 
@@ -97,6 +98,7 @@ HEADERS = {
         "X-Attach": args.attach,
         #  "Authorization": f"Bearer {NTFY_TOKEN}",
         "Authorization": f"Basic {auth_string_base64}",
+        "X-Filename": args.filename or None
         }
 
 if args.file:
@@ -106,9 +108,9 @@ if args.file:
         #  file_name = file_path.name
         HEADERS.update({
             "X-Title": "File received (via ntfy)",
-            "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=file_path.name),
+            "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=args.filename or file_path.name),
             "X-tags": "gift",
-            "X-Filename": file_path.name
+            "X-Filename": args.filename or file_path.name
             })
         #  r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
         r = requests.put(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
