@@ -63,6 +63,7 @@ argument_parser.add_argument("-d", "--delay", default=None)
 argument_parser.add_argument("-c", "--click", default=None)
 argument_parser.add_argument("-k", "--markdown", action="store_const",
                              const="yes")
+argument_parser.add_argument("-i", "--icon", help="Icon URL")
 argument_parser.add_argument("-f", "--file", help="Attach a local file")
 argument_parser.add_argument("-a", "--attach",
                              help="Attach a file from an URL", default=None)
@@ -84,7 +85,7 @@ MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
 
 HEADERS = {
         "X-Title": args.title or DEFAULT_MESSAGE_TITLE,
-        "X-Icon": ICON_IMAGE_URL,
+        "X-Icon": args.icon or None, #ICON_IMAGE_URL,
         "X-Priority": "urgent",
         "X-Tags": ", ".join(args.tags if args.tags else []),
         "X-Markdown": args.markdown or "no",
