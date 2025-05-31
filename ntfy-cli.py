@@ -109,7 +109,11 @@ if args.file:
 
     if file_path.is_file():
         #  file_name = file_path.name
-        HEADERS.update({"X-Filename": file_path.name})
+        HEADERS.update({
+            "X-Title": "File received (via ntfy)",
+            "X-Message": "Filee received (via ntfy)",
+            "X-Filename": file_path.name
+            })
         r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
                           headers=HEADERS)
     else:
