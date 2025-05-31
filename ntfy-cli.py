@@ -6,8 +6,6 @@ import os
 import pathlib
 import sys
 
-#  import click
-
 import requests
 #  from requests.auth import HTTPBasicAuth
 
@@ -83,14 +81,11 @@ auth_header_query_param_value = \
         base64.b64encode(auth_header_basic.encode("ascii")).decode("utf-8")
 
 MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
-#  print(auth_string, auth_string_bytes, auth_string_base64)
-
 
 HEADERS = {
         "X-Title": args.title or DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
         "X-Priority": "urgent",
-        #  "X-Tags": "+1, richtig",
         "X-Tags": ", ".join(args.tags if args.tags else []),
         "X-Markdown": args.markdown or "no",
         "X-Delay": args.delay or None,
@@ -105,13 +100,14 @@ if args.file:
     file_path = pathlib.Path(args.file)
 
     if file_path.is_file():
-        #  file_name = file_path.name
+
         HEADERS.update({
             "X-Title": "File received (via ntfy)",
             "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=args.filename or file_path.name),
             "X-tags": "gift",
             "X-Filename": args.filename or file_path.name
             })
+
         #  r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
         r = requests.put(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
                           headers=HEADERS)
