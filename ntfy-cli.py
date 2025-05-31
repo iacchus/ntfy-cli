@@ -87,6 +87,7 @@ auth_header_query_param_value = \
 MESSAGE_BODY = args.message or DEFAULT_MESSAGE_BODY
 #  print(auth_string, auth_string_bytes, auth_string_base64)
 
+
 HEADERS = {
         "X-Title": args.title or DEFAULT_MESSAGE_TITLE,
         "X-Icon": ICON_IMAGE_URL,
@@ -102,15 +103,28 @@ HEADERS = {
         }
 
 print(HEADERS)
+
+if args.file:
+    file_path = pathlib.Path(args.file)
+
+    if file_path.is_file():
+        #  file_name = file_path.name
+        HEADERS.update({"X-Filename": file_path.name})
+        r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
+                          headers=HEADERS)
+    else:
+        print("File '{file_path.absolute()}' not found")
+else:
+    r = requests.post(url=NTFY_URL, data=MESSAGE_BODY, headers=HEADERS)
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
 
 #  make_post_request(url=NTFY_URL, unencoded_data={"X-Message": "okayy"}, headers=HEADERS)
-r = requests.post(url=NTFY_URL,
-#                    auth=('', NTFY_TOKEN),
-                  data=MESSAGE_BODY,
-#                    data=DEFAULT_MESSAGE_BODY,
-                  headers=HEADERS)
+#  r = requests.post(url=NTFY_URL,
+#  #                    auth=('', NTFY_TOKEN),
+#                    data=MESSAGE_BODY,
+#  #                    data=DEFAULT_MESSAGE_BODY,
+#                    headers=HEADERS)
 
-#  print(r.text)
+print(r.text)
