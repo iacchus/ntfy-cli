@@ -45,6 +45,8 @@ DEFAULT_MESSAGE_BODY = 'testing\nnotification'
 
 PRIORITIES = {"urgent", "high", "default", "low", "min"}
 
+FILE_RECEIVED_MESSAGE = "You received a file: {file_name}"
+
 argument_parser = argparse.ArgumentParser(
         prog=os.path.basename(sys.argv[0]),
         description='Send ntfy notification',
@@ -111,15 +113,17 @@ if args.file:
         #  file_name = file_path.name
         HEADERS.update({
             "X-Title": "File received (via ntfy)",
-            "X-Message": "Filee received (via ntfy)",
+            "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=file_path.name),
             "X-Filename": file_path.name
             })
         r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
                           headers=HEADERS)
+        print(r.text)
     else:
-        print("File '{file_path.absolute()}' not found")
+        print(f"File '{file_path.absolute()}' not found")
 else:
     r = requests.post(url=NTFY_URL, data=MESSAGE_BODY, headers=HEADERS)
+    print(r.text)
 #  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
 #  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
@@ -131,4 +135,4 @@ else:
 #  #                    data=DEFAULT_MESSAGE_BODY,
 #                    headers=HEADERS)
 
-print(r.text)
+#  print(r.text)
