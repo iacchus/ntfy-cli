@@ -110,7 +110,8 @@ if args.file:
             "X-tags": "gift",
             "X-Filename": file_path.name
             })
-        r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
+        #  r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
+        r = requests.put(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
                           headers=HEADERS)
         print(r.text)
     else:
