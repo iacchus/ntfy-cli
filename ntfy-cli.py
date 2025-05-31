@@ -6,10 +6,10 @@ import os
 import pathlib
 import sys
 
-import click
+#  import click
 
 import requests
-from requests.auth import HTTPBasicAuth
+#  from requests.auth import HTTPBasicAuth
 
 # https://github.com/iacchus/ntfy-cli
 # https://docs.ntfy.sh/publish/
@@ -30,10 +30,8 @@ from requests.auth import HTTPBasicAuth
 # https://stackoverflow.com/a/8706029/371160
 
 # let's prepend all environment variables with our namespace ("NTFY_", by now)
-#  NTFY_FROM_STDIN = os.environ.get('NTFY_FROM_STDIN')
 NTFY_SERVER = os.environ.get('NTFY_SERVER')
 NTFY_TOPIC = os.environ.get('NTFY_TOPIC')
-#  NTFY_DEFAULT_TOPIC_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
 NTFY_URL = f"{NTFY_SERVER}/{NTFY_TOPIC}"
 NTFY_TOKEN = os.environ.get('NTFY_TOKEN') or ""
 
@@ -53,9 +51,6 @@ argument_parser = argparse.ArgumentParser(
         epilog="https://github.com/iacchus/ntfy-cli"
         )
 
-#  argument_parser.add_argument("title")
-#  argument_parser.add_argument("message")
-#  argument_parser.add_argument("-t", "--title", default=DEFAULT_MESSAGE_TITLE)
 argument_parser.add_argument("-t", "--title",
                              default=os.environ.get('NTFY_MESSAGE_TITLE') or
                              DEFAULT_MESSAGE_TITLE)
@@ -114,6 +109,7 @@ if args.file:
         HEADERS.update({
             "X-Title": "File received (via ntfy)",
             "X-Message": FILE_RECEIVED_MESSAGE.format(file_name=file_path.name),
+            "X-tags": "gift",
             "X-Filename": file_path.name
             })
         r = requests.post(url=NTFY_URL, data=open(file_path.absolute(), "rb"),
@@ -124,15 +120,4 @@ if args.file:
 else:
     r = requests.post(url=NTFY_URL, data=MESSAGE_BODY, headers=HEADERS)
     print(r.text)
-#  print(NTFY_SERVER, NTFY_TOKEN, NTFY_TOPIC, NTFY_URL)
 
-#  basic_creds = HTTPBasicAuth("", NTFY_TOKEN)
-
-#  make_post_request(url=NTFY_URL, unencoded_data={"X-Message": "okayy"}, headers=HEADERS)
-#  r = requests.post(url=NTFY_URL,
-#  #                    auth=('', NTFY_TOKEN),
-#                    data=MESSAGE_BODY,
-#  #                    data=DEFAULT_MESSAGE_BODY,
-#                    headers=HEADERS)
-
-#  print(r.text)
