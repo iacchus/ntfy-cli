@@ -99,8 +99,6 @@ HEADERS = {
         "Authorization": f"Basic {auth_string_base64}",
         }
 
-print(HEADERS)
-
 if args.file:
     file_path = pathlib.Path(args.file)
 
@@ -120,4 +118,6 @@ if args.file:
 else:
     r = requests.post(url=NTFY_URL, data=MESSAGE_BODY, headers=HEADERS)
     print(r.text)
+
+print(HEADERS)
 
